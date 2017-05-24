@@ -1,1 +1,1 @@
-Usage : ./txtcp [-hir] FILENAME
+Usage : ./txtcp [-hir] INPUT OUTPUT

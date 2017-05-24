@@ -4,6 +4,7 @@ char *fileopen(char *filename, int opt){
     int fd;
     char *c = (char *)calloc(1, sizeof(char));
     char *tmp;
+    int next;
 
     fd = open(filename, O_RDONLY|O_CREAT, S_IRUSR|S_IWUSR);
     if (fd == -1) {
@@ -15,8 +16,10 @@ char *fileopen(char *filename, int opt){
     char *out = (char *)calloc((size_t)size, sizeof(char));
 
     if (opt == 'r') {
+        next = -2;
         lseek(fd, -1, SEEK_END);
     } else {
+        next = 0;
         lseek(fd, 0, SEEK_SET);
     }
 
@@ -36,13 +39,14 @@ char *fileopen(char *filename, int opt){
                 perror("read error\n");
             }
 
-            lseek(fd, -2, SEEK_CUR);
+            lseek(fd, next, SEEK_CUR);
 
-            sprintf(buf, "%s%s", buf, c);
             i++;
             if (*c == '\n') {
                 break;
             }
+
+            sprintf(buf, "%s%s", buf, c);
 
             if (i >= size) {
                 break;
@@ -50,10 +54,13 @@ char *fileopen(char *filename, int opt){
             n++;
         }
 
-        sprintf(out, "%s%s", out, buf);
         strrev(buf);
+        sprintf(out, "%s\n%s", out, buf);
     }
 
+    strrev(out);
+    out[strlen(out) - 1] = '\0';
+    strrev(out);
     return out;
 }
 
