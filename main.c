@@ -9,20 +9,22 @@ int main(int argc, char *argv[]) {
         //コマンドライン引数のオプションがなくなるまで繰り返す
         switch (opt) {
             case 'h':
-                printf("-hがオプションとして渡されました\n");
+                print_help();
                 break;
 
             case 'i':
-                printf("-iがオプションとして渡されました\n");
+//                printf("-iがオプションとして渡されました%s\n", optarg);
+                fileopen(optarg, opt);
                 break;
 
             case 'r':
-                printf("-rがオプションとして渡されました\n");
+//                printf("-rがオプションとして渡されました%s\n", optarg);
+                fileopen(optarg, opt);
                 break;
 
             default: /* '?' */
                 //指定していないオプションが渡された場合
-                printf("Usage: %s [-f] [-g] [-h argment] arg1 ...\n", argv[0]);
+//                printf("Usage: %s [-f] [-g] [-h argment] arg1 ...\n", argv[0]);
                 break;
         }
     }
@@ -31,6 +33,8 @@ int main(int argc, char *argv[]) {
     for (i = optind; i < argc; i++) {
         printf("arg = %s\n", argv[i]);
     }
-    printf("Hello, World!\n");
+
+
+
     return 0;
 }
