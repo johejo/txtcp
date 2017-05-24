@@ -54,7 +54,9 @@ char *fileopen(char *filename, int opt){
             n++;
         }
 
-        strrev(buf);
+        if (next == -2) {
+            strrev(buf);
+        }
         sprintf(out, "%s\n%s", out, buf);
     }
 

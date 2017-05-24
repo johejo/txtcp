@@ -1,40 +1,41 @@
 #include "defs.h"
 
 int main(int argc, char *argv[]) {
-    int i, opt;
-    char *buf;
+    int opt = 0;
+    char *buf = NULL;
+    int optcheck = 0;
 
     opterr = 0; //getopt()のエラーメッセージを無効にする。
 
     while ((opt = getopt(argc, argv, "hi:r:")) != -1) {
         //コマンドライン引数のオプションがなくなるまで繰り返す
+
         switch (opt) {
             case 'h':
+                optcheck = 1;
                 print_help();
                 break;
 
             case 'i':
-//                printf("-iがオプションとして渡されました%s\n", optarg);
                 buf = fileopen(optarg, opt);
+                write_file(argv[optind], buf);
                 break;
 
             case 'r':
-//                printf("-rがオプションとして渡されました%s\n", optarg);
+                optcheck = 1;
                 buf = fileopen(optarg, opt);
+                write_file(argv[optind], buf);
                 break;
 
             default: /* '?' */
                 //指定していないオプションが渡された場合
-//                printf("Usage: %s [-f] [-g] [-h argment] arg1 ...\n", argv[0]);
+                print_help();
                 break;
         }
     }
-    if(buf != NULL) {
-        write_file(argv[optind], buf);
-    }
-    //オプション以外の引数を出力する
-    for (i = optind; i < argc; i++) {
-//        printf("arg = %s\n", argv[i]);
+
+    if () {
+
     }
 
     return 0;
