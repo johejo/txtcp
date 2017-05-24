@@ -1,10 +1,8 @@
 #include "defs.h"
 
-void fileopen(char *filename, int opt){
+char *fileopen(char *filename, int opt){
     int fd;
-
     char *c = (char *)calloc(1, sizeof(char));
-    int n;
     char *tmp;
 
     fd = open(filename, O_RDONLY|O_CREAT, S_IRUSR|S_IWUSR);
@@ -14,20 +12,15 @@ void fileopen(char *filename, int opt){
     }
 
     off_t size = lseek(fd, 0, SEEK_END);
+    char *out = (char *)calloc((size_t)size, sizeof(char));
 
     if (opt == 'r') {
-        if(lseek(fd, -1, SEEK_END) < 0){
-            perror("seek end error\n");
-            exit(1);
-        }
+        lseek(fd, -1, SEEK_END);
     } else {
-        if(lseek(fd, 0, SEEK_SET) < 0){
-            perror("seek start error\n");
-            exit(1);
-        }
+        lseek(fd, 0, SEEK_SET);
     }
 
-    int i = 0;
+    int i = 0, n;
     while(i < size) {
         char *buf = (char *)calloc(1, sizeof(char));
         n = 1;
@@ -45,12 +38,11 @@ void fileopen(char *filename, int opt){
 
             lseek(fd, -2, SEEK_CUR);
 
+            sprintf(buf, "%s%s", buf, c);
             i++;
             if (*c == '\n') {
                 break;
             }
-
-            sprintf(buf, "%s%s", buf, c);
 
             if (i >= size) {
                 break;
@@ -58,9 +50,25 @@ void fileopen(char *filename, int opt){
             n++;
         }
 
+        sprintf(out, "%s%s", out, buf);
         strrev(buf);
-        printf("%s\n", buf);
     }
+
+    return out;
+}
+
+void write_file(char *filename, char *out){
+    int fd = open(filename, O_WRONLY|O_CREAT, S_IRUSR|S_IWUSR);
+    if (fd == -1) {
+        perror("Cannot open write");
+        exit(1);
+    }
+
+    if (write(fd, out, strlen(out)) == -1){
+        perror("write error");
+        exit(1);
+    }
+    return;
 }
 
 
@@ -69,6 +77,7 @@ void print_help(){
     if(system(command) == -1){
         perror("help error");
     }
+    return;
 }
 
 void strrev(char s[]){
@@ -93,8 +102,4 @@ void strrev(char s[]){
         last--;
     }
     return;
-}
-
-void write_file(){
-
 }

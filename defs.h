@@ -13,7 +13,8 @@
 #include <sys/types.h>
 
 void print_help();
-void fileopen(char *filename, int opt);
+char *fileopen(char *filename, int opt);
 void strrev(char s[]);
+void write_file(char *filename, char *out);
 
 #endif //TXTCP_DEFS_H

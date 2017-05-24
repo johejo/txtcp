@@ -2,6 +2,7 @@
 
 int main(int argc, char *argv[]) {
     int i, opt;
+    char *buf;
 
     opterr = 0; //getopt()のエラーメッセージを無効にする。
 
@@ -14,12 +15,12 @@ int main(int argc, char *argv[]) {
 
             case 'i':
 //                printf("-iがオプションとして渡されました%s\n", optarg);
-                fileopen(optarg, opt);
+                buf = fileopen(optarg, opt);
                 break;
 
             case 'r':
 //                printf("-rがオプションとして渡されました%s\n", optarg);
-                fileopen(optarg, opt);
+                buf = fileopen(optarg, opt);
                 break;
 
             default: /* '?' */
@@ -28,13 +29,13 @@ int main(int argc, char *argv[]) {
                 break;
         }
     }
-
+    if(buf != NULL) {
+        write_file(argv[optind], buf);
+    }
     //オプション以外の引数を出力する
     for (i = optind; i < argc; i++) {
-        printf("arg = %s\n", argv[i]);
+//        printf("arg = %s\n", argv[i]);
     }
-
-
 
     return 0;
 }
