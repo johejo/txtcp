@@ -12,9 +12,12 @@
 #include <fcntl.h>
 #include <sys/types.h>
 
+#define ERROR -1
+#define SUCCESS 0
+
 void print_help();
-char *fileopen(char *filename, int opt);
+char *fileopen(char *filename, int optr);
 void strrev(char s[]);
-void write_file(char *filename, char *out);
+int write_file(char *filename, char *out, int opti);
 
 #endif //TXTCP_DEFS_H

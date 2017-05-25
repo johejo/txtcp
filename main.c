@@ -3,36 +3,45 @@
 int main(int argc, char *argv[]) {
     int opt = 0;
     char *buf = NULL;
-    int optcheck = 0;
+    int optr = 0;
+    int opti = 0;
+    int optn = 1;
 
-    opterr = 0; //getopt()のエラーメッセージを無効にする。
+    opterr = 0;
 
-    while ((opt = getopt(argc, argv, "hi:r:")) != -1) {
-        //コマンドライン引数のオプションがなくなるまで繰り返す
+    while ((opt = getopt(argc, argv, "hir")) != -1) {
 
+        optn++;
         switch (opt) {
             case 'h':
-                optcheck = 1;
                 print_help();
                 break;
 
             case 'i':
-                buf = fileopen(optarg, opt);
-                write_file(argv[optind], buf);
+                opti = 1;
                 break;
 
             case 'r':
-                optcheck = 1;
-                buf = fileopen(optarg, opt);
-                write_file(argv[optind], buf);
+                optr = 1;
                 break;
 
             default: /* '?' */
-                //指定していないオプションが渡された場合
                 print_help();
                 break;
         }
     }
+
+    buf = fileopen(argv[argc - 2], optr);
+    if (buf == NULL) {
+        perror("open error");
+        exit(1);
+    }
+    if (write_file(argv[argc - 1], buf, opti) == ERROR){
+        perror("write error");
+        exit(1);
+    }
+
+
 
     return 0;
 }
