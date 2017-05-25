@@ -84,8 +84,9 @@ int write_file(char *filename, char *out, int opti){
     if(opti == 1 && fcheck != -1){
         //Overwrite check
         while(1) {
-            printf("Would you like to overwrite the file?(y/n):");
+            printf("Would you like to overwrite the file?(y/n)\n");
             int c = fgetc(stdin);
+            fgetc(stdin);//Remove '\n'
             if (c == 'y') {
                 break;
             } else if (c == 'n') {
@@ -117,7 +118,7 @@ void print_help(){
 
 //Reverse String
 void strrev(char s[]){
-    char temp = '\0';
+    char temp;
     char *first = s;
     char *last = s;
 
