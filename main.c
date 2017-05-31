@@ -5,13 +5,11 @@ int main(int argc, char *argv[]) {
     char *buf = NULL;
     int optr = 0;
     int opti = 0;
-    int optn = 1;
 
     opterr = 0;
 
     while ((opt = getopt(argc, argv, "hir")) != -1) {
 
-        optn++;
         switch (opt) {
             case 'h':
                 print_help();
