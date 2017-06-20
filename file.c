@@ -77,6 +77,8 @@ int write_file(char *filename, char *out, int opti){
     //Check output file
     int fcheck = open(filename, O_RDONLY);
 
+    
+
     if(opti == 1 && fcheck != -1){
         //Overwrite check
         while(1) {
