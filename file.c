@@ -69,10 +69,6 @@ char *fileopen(char *filename, int optr){
         sprintf(out, "%s\n%s", out, buf);
     }
 
-    //Remove first '\n'
-    strrev(out);
-    out[strlen(out) - 1] = '\0';
-    strrev(out);
     return out;
 }
 
