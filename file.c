@@ -1,5 +1,6 @@
 #include "defs.h"
 
+
 //Open file
 char *fileopen(char *filename, int optr){
     int fd;
@@ -76,8 +77,6 @@ char *fileopen(char *filename, int optr){
 int write_file(char *filename, char *out, int opti){
     //Check output file
     int fcheck = open(filename, O_RDONLY);
-
-    
 
     if(opti == 1 && fcheck != -1){
         //Overwrite check
