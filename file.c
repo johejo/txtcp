@@ -12,6 +12,8 @@ char *fileopen(char *filename, int optr){
     if (fd == -1) {
         perror("Cannot open file");
         return NULL;
+
+        
     }
 
     //Check size
